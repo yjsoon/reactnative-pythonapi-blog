@@ -23,8 +23,14 @@ export default function SignInScreen({ navigation }) {
     navigation.navigate("Account");
   }
 
+  function dismissKeyboard() {
+    if (Platform.OS !== "web") {
+      Keyboard.dismiss();
+    }
+  }
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
         <Text style={styles.title}>Sign in to blog</Text>
         <Text style={styles.fieldTitle}>Username</Text>
