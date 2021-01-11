@@ -4,39 +4,43 @@ import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const API = "https://yjsoon2.pythonanywhere.com";
+const API = "https://lowjoshua.pythonanywhere.com";
 const API_WHOAMI = "/whoami";
 
 export default function AccountScreen({ navigation }) {
   const [username, setUsername] = useState("");
 
   async function getUsername() {
-    console.log("---- Getting user name -----");
-
-    /// get my token
+    console.log("---- Getting user name ----");
     const token = await AsyncStorage.getItem("token");
     console.log(`Token is ${token}`);
-    /// send it to the API and save the user name
     try {
       const response = await axios.get(API + API_WHOAMI, {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
+        headers: { Authorization: `JWT ${token}` },
       });
-      console.log("Got the user name!");
-      console.log(response.data.username);
+      console.log("Got user name!");
       setUsername(response.data.username);
     } catch (error) {
-      console.log("Error getting user name!");
-      console.log(error);
+      console.log("Error getting user name");
+      if (error.response) {
+        console.log(error.response.data);
+      } else {
+        console.log(error);
+      }
     }
-
-    /// if succeed, we will display the user name
-    /// if fail... do nothing?
   }
 
   useEffect(() => {
-    getUsername();
+    console.log("Setting up navlistener");
+
+    const removeListener = navigation.addListener("focus", () => {
+      console.log("Running nav listener");
+      setUsername("");
+      getUsername();
+    });
+    getUsername(); // this is for the first time it runs
+
+    return removeListener;
   }, []);
 
   function signOut() {

@@ -32,7 +32,7 @@ export default function SignInScreen({ navigation }) {
       });
       console.log("Success logging in!");
       console.log(response);
-      AsyncStorage.setItem("token", response.data.access_token);
+      await AsyncStorage.setItem("token", response.data.access_token);
       navigation.navigate("Account");
     } catch (error) {
       console.log("Error logging in!");
