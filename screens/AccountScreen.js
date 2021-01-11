@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const API = "https://lowjoshua.pythonanywhere.com";
+const API = "https://yjsoon2.pythonanywhere.com";
 const API_WHOAMI = "/whoami";
 
 export default function AccountScreen({ navigation }) {
@@ -22,11 +28,7 @@ export default function AccountScreen({ navigation }) {
       setUsername(response.data.username);
     } catch (error) {
       console.log("Error getting user name");
-      if (error.response) {
-        console.log(error.response.data);
-      } else {
-        console.log(error);
-      }
+      signOut();
     }
   }
 
@@ -35,7 +37,7 @@ export default function AccountScreen({ navigation }) {
 
     const removeListener = navigation.addListener("focus", () => {
       console.log("Running nav listener");
-      setUsername("");
+      setUsername(<ActivityIndicator />);
       getUsername();
     });
     getUsername(); // this is for the first time it runs
