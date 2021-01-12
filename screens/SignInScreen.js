@@ -10,6 +10,8 @@ import {
   Keyboard,
   Platform,
   ActivityIndicator,
+  Button,
+  Touchable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -81,6 +83,13 @@ export default function SignInScreen({ navigation }) {
             <ActivityIndicator style={{ marginBottom: 20, marginLeft: 30 }} />
           ) : null}
         </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("SignUp");
+          }}
+        >
+          <Text style={styles.switchText}>Need an account? Sign up</Text>
+        </TouchableOpacity>
         <Text style={styles.errorText}>{errorText}</Text>
       </View>
     </TouchableWithoutFeedback>
@@ -127,5 +136,8 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     height: 40,
+  },
+  switchText: {
+    color: "blue",
   },
 });
