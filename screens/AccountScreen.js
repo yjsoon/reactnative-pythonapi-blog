@@ -8,28 +8,15 @@ import {
 } from "react-native";
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-
-const API = "https://yjsoon2.pythonanywhere.com";
-const API_WHOAMI = "/whoami";
+import { useUsername } from "../hooks/useAPI";
 
 export default function AccountScreen({ navigation }) {
   const [username, setUsername] = useState("");
+  const getUsernameFromAPI = useUsername(signOut);
 
   async function getUsername() {
-    console.log("---- Getting user name ----");
-    const token = await AsyncStorage.getItem("token");
-    console.log(`Token is ${token}`);
-    try {
-      const response = await axios.get(API + API_WHOAMI, {
-        headers: { Authorization: `JWT ${token}` },
-      });
-      console.log("Got user name!");
-      setUsername(response.data.username);
-    } catch (error) {
-      console.log("Error getting user name");
-      signOut();
-    }
+    const nameFromAPI = await getUsernameFromAPI();
+    setUsername(nameFromAPI);
   }
 
   useEffect(() => {
