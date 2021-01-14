@@ -20,7 +20,7 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
     username,
     password,
     () => {
-      navigation.navigate("Account");
+      navigation.navigate("TabStack");
     }
   );
 
