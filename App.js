@@ -8,10 +8,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TabStack from "./components/TabStack";
+import { Provider } from "react-redux";
+import store from "./redux/createStore";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function AppWrapper() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
+
+function App() {
   const [loading, setLoading] = useState(true);
   const [signedIn, setSignedIn] = useState(false);
 
