@@ -23,7 +23,13 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
     username,
     password,
     () => {
+      // setTimeout(() => {
       dispatch(signInAction());
+      // }, 500);
+
+      // Note to self: the setTimeout method gets rid of the warning
+      // because it gives time for loading to change the ActivityIndicator
+      // before the component unmounts
     }
   );
 

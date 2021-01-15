@@ -9,9 +9,12 @@ import {
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUsername } from "../hooks/useAPI";
+import { useDispatch } from "react-redux";
+import { signOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
   const [username, loading, error, refresh] = useUsername();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error) {
@@ -29,7 +32,7 @@ export default function AccountScreen({ navigation }) {
 
   function signOut() {
     AsyncStorage.removeItem("token");
-    navigation.navigate("SignIn");
+    dispatch(signOutAction());
   }
 
   return (
