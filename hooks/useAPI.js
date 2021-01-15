@@ -42,8 +42,8 @@ export function useUsername() {
 }
 
 export function useAuth(username, password, navigationCallback) {
-  [loading, setLoading] = useState(false);
-  [errorText, setErrorText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   async function login() {
     console.log(" ----- Login ----- ");
