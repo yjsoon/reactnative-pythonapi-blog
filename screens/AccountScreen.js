@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Switch,
 } from "react-native";
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,6 +15,7 @@ import { signOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
   const [username, loading, error, refresh] = useUsername();
+  const [isEnabled, setIsEnabled] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,6 +41,10 @@ export default function AccountScreen({ navigation }) {
     <View style={commonStyles.container}>
       <Text>Account Screen</Text>
       {loading ? <ActivityIndicator /> : <Text>{username}</Text>}
+      <Switch
+        value={isEnabled}
+        onValueChange={() => setIsEnabled(!isEnabled)}
+      />
       <Button title="Sign out" onPress={signOut} />
     </View>
   );
