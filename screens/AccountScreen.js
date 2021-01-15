@@ -10,13 +10,14 @@ import {
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUsername } from "../hooks/useAPI";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOutAction } from "../redux/ducks/blogAuth";
+import { toggleDarkMode } from "../redux/ducks/accountPrefs";
 
 export default function AccountScreen({ navigation }) {
   const [username, loading, error, refresh] = useUsername();
-  const [isEnabled, setIsEnabled] = useState(false);
   const dispatch = useDispatch();
+  const isDarkModeOn = useSelector((state) => state.prefs.darkMode);
 
   useEffect(() => {
     if (error) {
@@ -42,8 +43,8 @@ export default function AccountScreen({ navigation }) {
       <Text>Account Screen</Text>
       {loading ? <ActivityIndicator /> : <Text>{username}</Text>}
       <Switch
-        value={isEnabled}
-        onValueChange={() => setIsEnabled(!isEnabled)}
+        value={isDarkModeOn}
+        onValueChange={() => dispatch(toggleDarkMode())}
       />
       <Button title="Sign out" onPress={signOut} />
     </View>
